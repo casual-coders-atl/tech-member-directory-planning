@@ -1,0 +1,148 @@
+Member Record
+
+Display Name
+  String
+  Required
+  Which special characters should be allowed?
+  How many characters should we limit display names to?
+
+ID
+  Integer
+  Auto-generated
+  This ID is used to link projects and conversations to the member
+
+Picture
+  Image File or URL String
+  Optional
+  A profile picture of the user or a link to where the user’s profile picture is stored.
+
+Preferred Location
+  String
+  Optional
+  This is a location the member would like to attend meetings from or where the member will be commuting from.
+  This location shall be a valid city name, neighborhood name, or address.
+
+Mobile Number
+  Number
+  Optional if the member doesn’t sign up to receive mobile notifications; otherwise, required.
+  This is sensitive personal identifiable information.
+  Use Firebase Auth rather than storing in our databases?
+
+Is the member’s mobile number verified?
+  Boolean
+  Required
+  Indicates whether the member has verified their mobile number.
+  E.g., By confirming the receipt of a code to verify their mobile number.
+  Not directly editable by members.
+  Possibly require verification of this mobile number after a period of inactivity.
+
+Member’s Encrypted Mobile Number Verification Code
+	String
+	Required
+	This value will be (re)generated prior to sending a mobile number verification code.
+	This code will be decrypted and compared to a code received from a user to verify the mobile number.
+
+Email
+  String
+  Optional if the user signed up with a mobile number; otherwise, required.
+
+Is the user’s email verified?
+  Boolean
+  Required
+  Indicates whether the user has verified their email address.
+  E.g., By confirming the receipt of a code to verify their email address.
+  Not directly editable by members.
+
+Member’s Encrypted Email Verification Code
+	String
+	Required
+	This value will be (re)generated prior to sending an email verification code
+  This code will be decrypted and compared to a code received from a user to verify the email.
+
+Bio
+  String
+  Optional
+  A bio indicating anything members would like visitors to know about them.
+  How many characters should we limit bios to?
+
+Skills
+  List/Array of Strings, or a parsable string of skills.
+  Optional
+
+Social Links
+  List/Array of Strings, or a parsable string of URLs
+  Optional
+  This will be a list/array of URLs (E.g., LinkedIn, GitHub, etc.)
+
+Is a Private Member?
+  Boolean
+  Required
+  Indicates whether the member profile will only be visible to logged in users.
+  NOTE: Projects that the member creates, while their profile is private, shall default to private unless the member sets the projects to public.
+  Coordinate this requirement with Project Requirements
+
+Is the member’s identity verified?
+  Boolean
+  Required
+  Indicates whether an admin, Meetup organizer, or a threshold number of other users have met the user at an event within the last year.
+  What should the verification process be? Is there a better way to prevent abuse of the directory?
+	Not directly editable by members.
+
+Member identity verification date
+  Date
+  Required
+  Indicates the date that the member was verified.
+  Not directly editable by members.
+
+Hashtags/Interests
+	List/Array of Strings, or a parsable string of hashtags.
+  Optional
+  Hashtags the user wants to be associated with.
+  E.g., #BreakIntoTech, #Cofounder
+
+Is the Member Profile Archived?
+	Boolean
+  Required
+  Indicates whether the profile is archived.
+
+Reason for Archiving
+	String
+	Required in order for a member profile to be archived; otherwise, optional.
+
+Is the Member Profile Blocked?
+	Boolean
+  Required
+  Indicates whether the profile is archived.
+
+Reason for Blocking Member
+  String
+	Required in order for a member profile to be blocked; otherwise, optional.
+
+
+
+
+
+----------------------------------------------
+Member Record Actions
+
+Add Member Profile to Database
+
+Modify Member Profile Record in Database
+	The fields that may be modified will depend on whether the user triggering the modification is the member or an admin.
+
+Delete Member Profile Record from Database
+
+Archive Member Profile Record in Database
+	Sets a value to true and accepts a reason for archiving.
+
+Block a Member
+	Sets a value to true and accepts a reason for deleting.
+
+Verify Mobile Number
+	Triggers actions to verify a member’s mobile number.
+
+Verify Email Address
+	Triggers actions to verify a member’s email address.
+
+Verify Member’s Identity
+	Set the value that indicates that the member’s identity is verified based on business logic.
