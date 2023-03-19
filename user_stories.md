@@ -28,10 +28,11 @@ Given <prerequisite>, I can <capability>.
 - Given that I created a project, I can delete it.
 - Given that I created a project, I can post project updates.
 - I can view a list of other users in the directory.
-- I can send messages to other users.
-- I can receive messages from other users.
-- I can view a list of messages that I sent to other members.
-- Given that I sent messages to other users, I can see a list of conversations with other members.
+- I can create a conversation thread with at least one other member, including one or more messages, so that conversation histories are only accessible to members that are invited to the thread by the creator.
+- I can see a list of Conversation Thread that I participate in.
+- Given that I participate in a Conversation Thread, I can post messages to the Conversation Thread.
+- Given that I participate in a Conversation Thread, I can view messages in the Conversation Thread.
+- Given that I participate and sent messages in a Conversation Thread, I can delete a message that I sent.
 - I can modify my account details.
 - I can delete my account.
 
@@ -42,14 +43,25 @@ Given <prerequisite>, I can <capability>.
 
 - I can register a new account and choose my role so that I can log in.
 - I can log into my account, so that I can contact and manage members of my organization.
+- I can broadcast messages to  members of my organization, in order notify members of important announcements.
+- I can invite members to my organization, so that they may receive and view private announcements.
 - I can modify my account details.
 - I can delete my account.
 
+## Visitor Stories
 
-## Admin Stories
+###### A visitor is a user that visits the website, but is not logged in.
+
+- I can register a new account and choose my role, so that I can log in.
+
+- I can see a list of public members
+- I can see a list of public projects
+
+
+## Administrator Stories
 
 - I can register a new account and choose my role so that I can log in.
-- I can log into my account, so that I can access admin functionality.
+- I can log into my account, so that I can access administrator functionality.
 - I can modify my account details.
 - I can modify other users' account details.
 - I can edit projects that other users have posted.
@@ -71,7 +83,6 @@ classDiagram
         - ImageUrls
         - Experience
         - SocialLinks
-        - CreatedAt
         (1) Register
         (2) Login
         (3) View
@@ -84,12 +95,20 @@ classDiagram
     	- Description
     	- ImageUrls
     	- CreatedAt
-    	() Create
-    	() ListMyOwn
-    	() ListAll
-    	() View
-    	() Modify
-    	() Delete
+    	(1) Create
+    	(2) ListMyOwn
+    	(3) ListAll
+    	(4) View
+    	(5) Modify
+    	(6) Delete
+    }
+    class ConversationThread {
+    	- ID
+    	- Participants
+    	- ListMyConversations
+      	(1) Post
+    	(2) View
+    	(3) Delete
     }
     class Message{
     	- ID
@@ -97,11 +116,11 @@ classDiagram
     	- SenderID
     	- RecipientID
     	- CreatedAt
-    	(1) Create
-    	(2) Delete
     }
 	User --> Project : Creates
-	User --> Message : Sends
+	User --> ConversationThread : Creates
+	User --> ConversationThread : Posts
+	Message --> ConversationThread : Belongs to
 
     
 ```
