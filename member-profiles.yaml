@@ -1,0 +1,160 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: TBD
+info:
+  version: "1.0.0"
+  title: "Member Profile API"
+  description: "An example API demonstrating security best practices"
+  contact:
+    email: TBD
+  license:
+    name: TBD
+    url: TBD
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /members:
+    get:
+      summary: "Get all members"
+      description: "Returns a list of all members"
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/MemberRecord"
+        401:
+          description: "Unauthorized"
+    post:
+      summary: "Create a new member"
+      description: "Create a new member with the specified properties"
+      security:
+        - api_key: []
+      parameters:
+        - name: member
+          in: body
+          description: "The member to create"
+          required: true
+          schema:
+            $ref: "#/definitions/MemberRecord"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/MemberRecord"
+        401:
+          description: "Unauthorized"
+        400:
+          description: "Bad request"
+  /members/{id}:
+    get:
+      summary: "Get a member by ID"
+      description: "Returns the member with the specified ID"
+      security:
+        - api_key: []
+      parameters:
+        - name: id
+          in: path
+          description: "The ID of the member to retrieve"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/MemberRecord"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Member not found"
+definitions:
+  MemberRecord:
+    type: object
+    properties:
+      DisplayName:
+        type: string
+        required: true
+        maxLength: 50
+        pattern: "^[a-zA-Z0-9_-]*$"
+      ID:
+        type: integer
+        autoIncrement: true
+      Picture:
+        type: string
+        format: uri
+      PreferredLocation:
+        type: string
+      MobileNumber:
+        type: number
+        sensitive: true
+      MobileNumberVerified:
+        type: boolean
+        required: true
+      MobileNumberVerificationCode:
+        type: string
+        required: true
+      Email:
+        type: string
+        format: email
+      EmailVerified:
+        type: boolean
+        required: true
+      EmailVerificationCode:
+        type: string
+        required: true
+      Bio:
+        type: string
+        maxLength: 200
+      Skills:
+        type: array
+        items:
+          type: string
+      SocialLinks:
+        type: array
+        items:
+          type: string
+          format: uri
+      IsPrivate:
+        type: boolean
+        required: true
+      IsIdentityVerified:
+        type: boolean
+        required: true
+      IdentityVerificationDate:
+        type: string
+        format: date
+        required: true
+      Interests:
+        type: array
+        items:
+          type: string
+      IsArchived:
+        type: boolean
+        required: true
+      ArchiveReason:
+        type: string
+        required: true
+      IsBlocked:
+        type: boolean
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /org-name/member-profiles/1.0.0
