@@ -17,9 +17,7 @@ Given <prerequisite>, I can <capability>.
 
 
 ## Member Stories
-
 ###### A member is a registered user that can be found in the member directory.
-
 - I can register a new account and choose my role, so that I can log in.
 - I can log into my account, so that I can use the member directory and see private members and projects.
 - I can post a project, so that other members can see what I'm working on.
@@ -38,19 +36,18 @@ Given <prerequisite>, I can <capability>.
 
 
 ## Organizer Stories
-
-###### An organizer is a person that hosts events and/or manages a group/club consisting of members.
-
+###### An organizer is a person that hosts events and/or manages an organization consisting of members.
 - I can register a new account and choose my role so that I can log in.
 - I can log into my account, so that I can contact and manage members of my organization.
 - I can broadcast messages to  members of my organization, in order notify members of important announcements.
 - I can invite members to my organization, so that they may receive and view private announcements.
+- I can create events, so that members can view upcoming events.
 - I can modify my account details.
 - I can delete my account.
 
 ## Visitor Stories
 
-###### A visitor is a user that visits the website, but is not logged in.
+###### A visitor is a user that visits the member directory website, but is not logged in.
 
 - I can register a new account and choose my role, so that I can log in.
 
@@ -59,6 +56,7 @@ Given <prerequisite>, I can <capability>.
 
 
 ## Administrator Stories
+###### An administrator is a user that manages the member directory website.
 
 - I can register a new account and choose my role so that I can log in.
 - I can log into my account, so that I can access administrator functionality.
@@ -110,12 +108,34 @@ classDiagram
     	(2) View
     	(3) Delete
     }
-    class Message{
+    class Message {
     	- ID
     	- Content
     	- SenderID
     	- RecipientID
     	- CreatedAt
+    }
+    class Organization {
+    	- ID
+    	- Name
+    	- Organizers
+    	() Create
+    	() View
+    	() Modify
+    	() Delete
+    }
+    class Event {
+    	- ID
+    	- EventLink
+    	- TimeStart
+    	- TimeEnd
+    	- Location
+    	(1) Create
+    	(2) ListMyOwn
+    	(3) View
+    	(4) Modify
+    	(5) Delete
+    	(6) ListAll
     }
 	User --> Project : Creates
 	User --> ConversationThread : Creates
